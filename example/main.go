@@ -57,7 +57,7 @@ func (UserDal) RecordNotFound(ctx context.Context, structName string, funcName s
 
 func GetDB(ctx context.Context) *gorm.DB {
 	dsn := "root:admin@tcp(127.0.0.1:3306)/baozhao?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+	db, _ := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		SkipDefaultTransaction:                   true,
 		NamingStrategy:                           nil,
 		FullSaveAssociations:                     false,
@@ -73,17 +73,9 @@ func GetDB(ctx context.Context) *gorm.DB {
 		Dialector:                                nil,
 		Plugins:                                  nil,
 	})
-	var name, phone, uid string
-	uMap := map[string]interface{}{
-		"age": gorm.Expr("age = age + ?", 1),
-	}
-	if name != "" {
-		uMap["name"] = name
-	}
-	db.Where("uid = ?", uid).Delete(&model.User{})
-	db.Updates(uMap)
-	if err != nil {
-		return nil
-	}
 	return db.Debug().WithContext(ctx)
+}
+
+func main() {
+
 }

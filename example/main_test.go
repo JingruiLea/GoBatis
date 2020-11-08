@@ -193,9 +193,6 @@ func Test14(t *testing.T) {
 func Test15(t *testing.T) {
 	ctx := context.WithValue(context.Background(), "123", "")
 	db := GetDB(ctx)
-	curd.Transaction(ctx, nil, func(tx *gorm.DB) error {
-
-	})
 	db.Transaction(func(tx *gorm.DB) error {
 		err := db.Updates(&model.User{
 			ID:        10086,

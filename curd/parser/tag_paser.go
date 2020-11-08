@@ -1,12 +1,13 @@
 package parser
 
 import (
+	"fmt"
+	"log"
 	"reflect"
 	"strconv"
 	"strings"
 
 	"github.com/JingruiLea/gobatis/curd/oprator/finisher"
-	"google.golang.org/appengine/log"
 
 	"github.com/JingruiLea/gobatis/curd/oprator/filter"
 
@@ -131,7 +132,7 @@ func WalkSel(str string, dbFunc *finisher.DBFunc) []*filter.Where {
 func subWalk(s *utils.Queue, dbFunc *finisher.DBFunc) *filter.Where {
 	res := &filter.Where{Op: "=", Or: false, Essential: true, Obj: "?"}
 	if s.Length() > 4 {
-		log.Errorf("%s.%s select tag parse error! ", dbFunc.StructName, dbFunc.Name)
+		log.Fatal(fmt.Sprintf("%s.%s select tag parse error! ", dbFunc.StructName, dbFunc.Name))
 	}
 	if word, _ := s.Pop(); word == "or" {
 		res.Or = true
